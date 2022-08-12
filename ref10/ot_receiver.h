@@ -14,15 +14,20 @@ struct ot_receiver
 
 	// temporary
 
-	ge_p3 xB;
-	unsigned char x[32];
+	ge_p3 xB[4];
+	unsigned char x[4][32];
 };
 
 typedef struct ot_receiver RECEIVER;
 
+void receiver_rsgen_part(RECEIVER *, unsigned char *, unsigned char, int i);
+void receiver_keygen_part(RECEIVER *, unsigned char [HASHBYTES], int i);
+
+// compatibility
+void receiver_maketable(RECEIVER *);
 void receiver_procS(RECEIVER *);
-void receiver_rsgen(RECEIVER *, unsigned char *, unsigned char);
-void receiver_keygen(RECEIVER *, unsigned char [HASHBYTES]);
+void receiver_rsgen(RECEIVER *, unsigned char *, unsigned char *);
+void receiver_keygen(RECEIVER *, unsigned char (*)[HASHBYTES]);
 
 #endif //ifndef OT_RECEIVER_H
 

@@ -17,7 +17,9 @@ struct ot_sender
 typedef struct ot_sender SENDER;
 
 void sender_genS(SENDER *, unsigned char *);
-void sender_keygen(SENDER *, unsigned char *, unsigned char (*)[HASHBYTES]);
+void sender_keygen(SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES]);
+
+void sender_keygen_part(SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES], int);
 
 #endif //ifndef OT_SENDER_H
 

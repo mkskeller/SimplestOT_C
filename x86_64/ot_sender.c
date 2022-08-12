@@ -29,7 +29,7 @@ void sender_genS(SENDER * s, unsigned char * S_pack)
 	ge_to_4x(&s->yS, &yS);
 }
 
-void sender_keygen(SENDER * s, 
+void sender_keygen(SENDER * s,
                    unsigned char * Rs_pack, 
                    unsigned char (*keys)[4][HASHBYTES])
 {

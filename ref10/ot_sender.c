@@ -28,9 +28,18 @@ void sender_genS(SENDER * s, unsigned char * S_pack)
 	s->yS = yS;
 }
 
-void sender_keygen(SENDER * s, 
+void sender_keygen(SENDER * s,
+                   unsigned char * Rs_pack,
+                   unsigned char (*keys)[4][HASHBYTES])
+{
+	for (int i = 0; i < 4; i++)
+		sender_keygen_part(s, &Rs_pack[i * HASHBYTES], keys, i);
+}
+
+void sender_keygen_part(SENDER * s,
                    unsigned char * Rs_pack, 
-                   unsigned char (*keys)[HASHBYTES])
+                   unsigned char (*keys)[4][HASHBYTES],
+				   int j)
 {
 	int i;
 
@@ -52,11 +61,11 @@ void sender_keygen(SENDER * s,
 	ge_p3_tobytes(Rs_pack, &Rs); // E_2(R^i)
 
 	ge_scalarmult_vartime(&P0, s->y, &Rs); // 64yR^i
-	ge_hash(keys[0], s->S_pack, Rs_pack, &P0); // E_2(yR^i)
+	ge_hash(keys[0][j], s->S_pack, Rs_pack, &P0); // E_2(yR^i)
 
 	ge_p3_to_cached(&tmp, &P0);
 	ge_sub(&tmp2, &s->yS, &tmp); // 64(T-yR^i)
 	ge_p1p1_to_p3(&P1, &tmp2);
-	ge_hash(keys[1], s->S_pack, Rs_pack, &P1); // E_2(T - yR^i)
+	ge_hash(keys[1][j], s->S_pack, Rs_pack, &P1); // E_2(T - yR^i)
 }
 

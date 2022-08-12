@@ -81,8 +81,8 @@ set(SRCS_ASM
     )
 add_library(SimplestOT_ASM STATIC ${SRCS_ASM})
 
-add_executable(ot_sender_asm ot_sender_test.c)
+add_executable(ot_sender_asm ../common/ot_sender_test.c)
 target_link_libraries(ot_sender_asm SimplestOT_ASM)
 
-add_executable(ot_receiver_asm ot_receiver_test.c)
+add_executable(ot_receiver_asm ../common/ot_receiver_test.c)
 target_link_libraries(ot_receiver_asm SimplestOT_ASM)

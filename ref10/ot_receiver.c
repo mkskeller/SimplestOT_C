@@ -4,6 +4,11 @@
 
 #include "ge.h"
 
+void receiver_maketable(RECEIVER * r)
+{
+	(void) r;
+}
+
 void receiver_procS(RECEIVER * r)
 {
 	int i;
@@ -21,29 +26,37 @@ void receiver_procS(RECEIVER * r)
 	r->S = S;
 }
 
-void receiver_rsgen(RECEIVER * r, 
+void receiver_rsgen_part(RECEIVER * r,
                      unsigned char * Rs_pack,
-                     unsigned char c)
+                     unsigned char c,
+					 int i)
 {
 	ge_p1p1 P;
 	ge_p3 P_tmp;
 	ge_cached xB;
 	
-	sc_random(r->x, 1);
-	ge_scalarmult_base(&r->xB, r->x); // 8x^iB
+	sc_random(r->x[i], 1);
+	ge_scalarmult_base(&r->xB[i], r->x[i]); // 8x^iB
 
-	ge_p3_to_cached(&xB, &r->xB);
+	ge_p3_to_cached(&xB, &r->xB[i]);
 
 	ge_sub(&P, &r->S, &xB); // 8S - 8x^iB
 	ge_p1p1_to_p3(&P_tmp, &P);
-	ge_p3_cmov(&r->xB, &P_tmp, c);
+	ge_p3_cmov(&r->xB[i], &P_tmp, c);
 
-	ge_p3_tobytes(Rs_pack, &r->xB); // E^1(R^i)
+	ge_p3_tobytes(Rs_pack, &r->xB[i]); // E^1(R^i)
 
 }
 
-void receiver_keygen(RECEIVER * r, 
-                     unsigned char keys[HASHBYTES])
+void receiver_rsgen(RECEIVER* r, unsigned char* Rs_pack, unsigned char* cs)
+{
+	for (int i = 0; i < 4; i++)
+		receiver_rsgen_part(r, &Rs_pack[i * PACKBYTES], cs[i], i);
+}
+
+void receiver_keygen_part(RECEIVER * r,
+                     unsigned char keys[HASHBYTES],
+					 int j)
 {
 	int i;
 
@@ -52,11 +65,16 @@ void receiver_keygen(RECEIVER * r,
 	
 	//
 
-	for (i = 0; i < 3; i++) ge_p3_dbl_p3(&r->xB, &r->xB);
-	ge_p3_tobytes(Rs_pack, &r->xB); // E_2(R^i)
+	for (i = 0; i < 3; i++) ge_p3_dbl_p3(&r->xB[j], &r->xB[j]);
+	ge_p3_tobytes(Rs_pack, &r->xB[j]); // E_2(R^i)
 
-	ge_scalarmult_vartime(&P, r->x, &r->S); // 64x^iS
+	ge_scalarmult_vartime(&P, r->x[j], &r->S); // 64x^iS
 
 	ge_hash(keys, r->S_pack, Rs_pack, &P); // E_2(x^iS)
 }
 
+void receiver_keygen(RECEIVER * r, unsigned char (*keys)[HASHBYTES])
+{
+	for (int i = 0; i < 4; i++)
+		receiver_keygen_part(r, keys[i], i);
+}

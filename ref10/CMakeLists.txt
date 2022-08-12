@@ -72,8 +72,8 @@ set(SRCS
     )
 add_library(SimplestOT STATIC ${SRCS})
 
-add_executable(ot_sender ot_sender_test.c)
+add_executable(ot_sender ../common/ot_sender_test.c)
 target_link_libraries(ot_sender SimplestOT)
 
-add_executable(ot_receiver ot_receiver_test.c)
+add_executable(ot_receiver ../common/ot_receiver_test.c)
 target_link_libraries(ot_receiver SimplestOT)
