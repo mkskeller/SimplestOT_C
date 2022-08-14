@@ -8,6 +8,12 @@
 #include "network.h"
 #include "cpucycles.h"
 
+#ifdef REF10
+#define SENDER ref10_SENDER
+#define sender_genS ref10_sender_genS
+#define sender_keygen ref10_sender_keygen
+#endif
+
 void ot_sender_test(SENDER * sender, int newsockfd)
 {
 	int i, j, k;

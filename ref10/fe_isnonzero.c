@@ -15,5 +15,5 @@ int fe_isnonzero(const fe f)
 {
   unsigned char s[32];
   fe_tobytes(s,f);
-  return crypto_verify_32(s,zero);
+  return ref10_crypto_verify_32(s,zero);
 }

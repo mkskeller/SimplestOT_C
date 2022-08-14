@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(SimplestOT C)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall -Wextra")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall -Wextra -DREF10")
 
 include_directories(.)
 
@@ -62,8 +62,8 @@ set(SRCS
     ot_receiver.h
     ot_sender.c
     ot_sender.h
-    randombytes.c
-    randombytes.h
+    ../common/randombytes.c
+    ../common/randombytes.h
     sc.h
     sc_muladd.c
     sc_random.c

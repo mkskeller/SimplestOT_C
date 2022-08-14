@@ -1,11 +1,11 @@
 #include "sc25519.h"
-#include "randombytes.h"
+#include "../common/randombytes.h"
 
 void sc25519_random(sc25519 *r, int c)
 {
 	unsigned char x[32];
 
-	randombytes(x, 32);
+	simplestot_randombytes(x, 32);
 
 	if (c == 0) 
 	{

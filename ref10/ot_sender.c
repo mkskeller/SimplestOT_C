@@ -5,7 +5,7 @@
 #include "ge.h"
 
 
-void sender_genS(SENDER * s, unsigned char * S_pack)
+void ref10_sender_genS(ref10_SENDER * s, unsigned char * S_pack)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void sender_genS(SENDER * s, unsigned char * S_pack)
 	s->yS = yS;
 }
 
-void sender_keygen(SENDER * s,
+void ref10_sender_keygen(ref10_SENDER * s,
                    unsigned char * Rs_pack,
                    unsigned char (*keys)[4][HASHBYTES])
 {
@@ -36,7 +36,7 @@ void sender_keygen(SENDER * s,
 		sender_keygen_part(s, &Rs_pack[i * HASHBYTES], keys, i);
 }
 
-void sender_keygen_part(SENDER * s,
+void sender_keygen_part(ref10_SENDER * s,
                    unsigned char * Rs_pack, 
                    unsigned char (*keys)[4][HASHBYTES],
 				   int j)

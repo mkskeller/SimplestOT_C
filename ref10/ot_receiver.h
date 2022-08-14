@@ -1,5 +1,5 @@
-#ifndef OT_RECEIVER_H
-#define OT_RECEIVER_H
+#ifndef REF10_OT_RECEIVER_H
+#define REF10_OT_RECEIVER_H
 
 #include <stdio.h>
 
@@ -7,7 +7,7 @@
 #include "ge.h"
 #include "ot_config.h"
 
-struct ot_receiver
+typedef struct
 {
 	unsigned char S_pack[ PACKBYTES ];
 	ge_p3 S;
@@ -16,18 +16,16 @@ struct ot_receiver
 
 	ge_p3 xB[4];
 	unsigned char x[4][32];
-};
+} ref10_RECEIVER;
 
-typedef struct ot_receiver RECEIVER;
-
-void receiver_rsgen_part(RECEIVER *, unsigned char *, unsigned char, int i);
-void receiver_keygen_part(RECEIVER *, unsigned char [HASHBYTES], int i);
+void receiver_rsgen_part(ref10_RECEIVER *, unsigned char *, unsigned char, int i);
+void receiver_keygen_part(ref10_RECEIVER *, unsigned char [HASHBYTES], int i);
 
 // compatibility
-void receiver_maketable(RECEIVER *);
-void receiver_procS(RECEIVER *);
-void receiver_rsgen(RECEIVER *, unsigned char *, unsigned char *);
-void receiver_keygen(RECEIVER *, unsigned char (*)[HASHBYTES]);
+void ref10_receiver_maketable(ref10_RECEIVER *);
+void ref10_receiver_procS(ref10_RECEIVER *);
+void ref10_receiver_rsgen(ref10_RECEIVER *, unsigned char *, unsigned char *);
+void ref10_receiver_keygen(ref10_RECEIVER *, unsigned char (*)[HASHBYTES]);
 
-#endif //ifndef OT_RECEIVER_H
+#endif //ifndef REF10_OT_RECEIVER_H
 

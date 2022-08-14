@@ -10,6 +10,14 @@
 #include "network.h"
 #include "cpucycles.h"
 
+#ifdef REF10
+#define RECEIVER ref10_RECEIVER
+#define receiver_procS ref10_receiver_procS
+#define receiver_maketable ref10_receiver_maketable
+#define receiver_rsgen ref10_receiver_rsgen
+#define receiver_keygen ref10_receiver_keygen
+#endif
+
 void ot_receiver_test(RECEIVER * receiver, int sockfd)
 {
 	int i, j, k;
@@ -29,7 +37,7 @@ void ot_receiver_test(RECEIVER * receiver, int sockfd)
 
 	for (i = 0; i < NOTS; i += 4)
 	{
-		randombytes(cs, sizeof(cs));
+		simplestot_randombytes(cs, sizeof(cs));
 
 		for (j = 0; j < 4; j++)
 		{ 

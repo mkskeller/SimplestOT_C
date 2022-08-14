@@ -71,8 +71,8 @@ set(SRCS_ASM
     ot_receiver.h
     ot_sender.c
     ot_sender.h
-    randombytes.c
-    randombytes.h
+    ../common/randombytes.c
+    ../common/randombytes.h
     sc25519.h
     sc25519_from32bytes.c
     sc25519_random.c

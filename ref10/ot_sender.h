@@ -1,5 +1,5 @@
-#ifndef OT_SENDER_H
-#define OT_SENDER_H
+#ifndef REF10_OT_SENDER_H
+#define REF10_OT_SENDER_H
 
 #include <stdio.h>
 
@@ -7,19 +7,17 @@
 #include "sc.h"
 #include "ot_config.h"
 
-struct ot_sender
+typedef struct
 {
 	unsigned char S_pack[ PACKBYTES ];
 	unsigned char y [32];
 	ge_p3 yS;
-};
+} ref10_SENDER;
 
-typedef struct ot_sender SENDER;
+void ref10_sender_genS(ref10_SENDER *, unsigned char *);
+void ref10_sender_keygen(ref10_SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES]);
 
-void sender_genS(SENDER *, unsigned char *);
-void sender_keygen(SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES]);
+void sender_keygen_part(ref10_SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES], int);
 
-void sender_keygen_part(SENDER *, unsigned char *, unsigned char (*)[4][HASHBYTES], int);
-
-#endif //ifndef OT_SENDER_H
+#endif //ifndef REF10_OT_SENDER_H
 

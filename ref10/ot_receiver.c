@@ -4,12 +4,12 @@
 
 #include "ge.h"
 
-void receiver_maketable(RECEIVER * r)
+void ref10_receiver_maketable(ref10_RECEIVER * r)
 {
 	(void) r;
 }
 
-void receiver_procS(RECEIVER * r)
+void ref10_receiver_procS(ref10_RECEIVER * r)
 {
 	int i;
 
@@ -26,7 +26,7 @@ void receiver_procS(RECEIVER * r)
 	r->S = S;
 }
 
-void receiver_rsgen_part(RECEIVER * r,
+void receiver_rsgen_part(ref10_RECEIVER * r,
                      unsigned char * Rs_pack,
                      unsigned char c,
 					 int i)
@@ -48,13 +48,13 @@ void receiver_rsgen_part(RECEIVER * r,
 
 }
 
-void receiver_rsgen(RECEIVER* r, unsigned char* Rs_pack, unsigned char* cs)
+void ref10_receiver_rsgen(ref10_RECEIVER* r, unsigned char* Rs_pack, unsigned char* cs)
 {
 	for (int i = 0; i < 4; i++)
 		receiver_rsgen_part(r, &Rs_pack[i * PACKBYTES], cs[i], i);
 }
 
-void receiver_keygen_part(RECEIVER * r,
+void receiver_keygen_part(ref10_RECEIVER * r,
                      unsigned char keys[HASHBYTES],
 					 int j)
 {
@@ -73,7 +73,7 @@ void receiver_keygen_part(RECEIVER * r,
 	ge_hash(keys, r->S_pack, Rs_pack, &P); // E_2(x^iS)
 }
 
-void receiver_keygen(RECEIVER * r, unsigned char (*keys)[HASHBYTES])
+void ref10_receiver_keygen(ref10_RECEIVER * r, unsigned char (*keys)[HASHBYTES])
 {
 	for (int i = 0; i < 4; i++)
 		receiver_keygen_part(r, keys[i], i);

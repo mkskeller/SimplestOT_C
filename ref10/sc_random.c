@@ -1,9 +1,9 @@
 #include "sc.h"
-#include "randombytes.h"
+#include "../common/randombytes.h"
 
 void sc_random(unsigned char *x, int c) {
 
-    randombytes(x, 32);
+    simplestot_randombytes(x, 32);
 
     if (c == 0)
     {
