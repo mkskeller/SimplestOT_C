@@ -1,5 +1,7 @@
 #include "fe.h"
 
+#include <stdio.h>
+
 void fe_print(fe f) {
     unsigned char a[32];
     fe_tobytes(a, f);
