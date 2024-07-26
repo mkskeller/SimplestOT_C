@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 project(SimplestOT C ASM)
 
+link_libraries(sodium)
+
 set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall -Wextra -no-pie -fno-PIC")
 
