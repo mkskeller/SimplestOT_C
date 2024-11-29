@@ -1,6 +1,31 @@
 cmake_minimum_required(VERSION 3.12)
 project(SimplestOT C)
 
+
+# cryptoTools code, see cryptoTools-license.txt for the license
+
+    find_path(SODIUM_INCLUDE_DIRS sodium.h HINTS  "${OC_THIRDPARTY_HINT}/include")
+
+    find_library(SODIUM_LIBRARIES NAMES sodium libsodium HINTS "${OC_THIRDPARTY_HINT}/lib")
+
+    if (NOT SODIUM_INCLUDE_DIRS OR NOT SODIUM_LIBRARIES)
+        message(FATAL_ERROR "Failed to find libsodium.\n  OC_THIRDPARTY_HINT=${OC_THIRDPARTY_HINT}\n  SODIUM_INCLUDE_DIRS=${SODIUM_INCLUDE_DIRS}\n  SODIUM_LIBRARIES=${SODIUM_LIBRARIES}")
+    endif ()
+
+    set(SODIUM_MONTGOMERY ON CACHE BOOL "SODIUM_MONTGOMERY...")
+
+    message(STATUS "SODIUM_INCLUDE_DIRS:  ${SODIUM_INCLUDE_DIRS}")
+    message(STATUS "SODIUM_LIBRARIES:  ${SODIUM_LIBRARIES}")
+    message(STATUS "SODIUM_MONTGOMERY:  ${SODIUM_MONTGOMERY}\n")
+
+    add_library(sodium STATIC IMPORTED)
+
+    set_property(TARGET sodium PROPERTY IMPORTED_LOCATION ${SODIUM_LIBRARIES})
+    target_include_directories(sodium INTERFACE
+                    $<BUILD_INTERFACE:${SODIUM_INCLUDE_DIRS}>
+                    $<INSTALL_INTERFACE:>)
+
+
 link_libraries(sodium)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
